@@ -1,0 +1,40 @@
+server.js:
+
+var keyword-ranking = {
+	 "url": "www.littleforest.co.uk",
+	 "keywords": [{ 	
+	 		"keyword": "teamsite", 
+	 		"ranking": [
+	 		{ 	
+	 			"date": "2015-10-20T07:56:00.123Z", 
+	 			"rank": 40
+	 		}, 
+	 		{ 	
+	 			"date": "2015-10-21T12:56:00.123Z", 
+	 			"rank": 39
+	 		}]
+	 }]
+	}
+	
+db.keywordranking.insert({"url": "www.littleforest.co.uk", "keywords": [{"keyword": "teamsite", "ranking": [{"date": "2015-10-20T07:56:00.123Z","rank": 40}, {"date": "2015-10-21T12:56:00.123Z", "rank": 39}]}]})
+
+controller.js:
+
+	/* For Pagination
+	$scope.$watch('currentPage + numPerPage', function() {
+		    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+		    , end = begin + $scope.numPerPage;
+		    
+		    $scope.filteredresults = $scope.searchresults.slice(begin, end);
+		});*/
+
+
+index.html
+
+			<!--<pagination 
+			  style="clear:both;display:block;"
+		      ng-model="currentPage"
+		      total-items="searchresults.length"
+		      max-size="maxSize"  
+		      boundary-links="true">
+		 </pagination>-->

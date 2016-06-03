@@ -1,0 +1,31 @@
+{
+  "name": "keyword-rank-checker",
+  "version": "1.0.0",
+  "description": "MEAN Stack RESTful API Keyword Rank Checker App",
+  "main": "server.js",
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "keywords": [
+    "lfi",
+    "rank"
+  ],
+  "author": "Adrian Asagba",
+  "dependencies": {
+    "app-config": "^0.1.4",
+    "body-parser": "^1.14.2",
+    "cheerio": "^0.19.0",
+    "express": "^4.13.3",
+    "fs": "^0.0.2",
+    "hma-proxy-scraper": "0.0.4",
+    "mongojs": "^1.4.1",
+    "nodemailer": "^2.3.0",
+    "request": "^2.65.0"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.7"
+  }
+}

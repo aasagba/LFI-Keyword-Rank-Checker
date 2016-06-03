@@ -1,0 +1,27 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+	<head>
+		<title>Web Scraper App</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		
+		<style>
+			div.match{margin-bottom: 0;background-color:orange; color:white}
+			h3.match{}
+		</style>
+	</head>
+	<body>
+		<div class="container" ng-controller="GraphCtrl">
+			<h1 style="margin-bottom:35px;"> Graph</h1>
+			
+			<div ng-repeat="keyword in graphHistory">
+					 {{keyword.rank}} - {{keyword.date | filter: date}} {{keyword.url}}
+				</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+		<script src="controllers/controller.js"></script>
+	</body>
+</html>

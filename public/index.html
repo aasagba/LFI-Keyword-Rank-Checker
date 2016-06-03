@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head>
+		<title>Keyword Rank Checker</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<script>
+			window.onload = function() {
+	            // post our message to the parent
+	            window.parent.postMessage(
+	                // get height of the content
+	                document.body.scrollHeight
+	                // set target domain
+	                ,"*"
+	            )
+        	};
+		</script>
+		<div class="header">
+            <div class="top-section"></div>
+        </div>
+		<div class="container-fluid" ng-controller="AppCtrl">
+			<div class="top-container">	
+				<div class="navigation">
+					<div class="main-heading">
+						<h1>Keyword Rank Checker</h1>
+					</div>
+					<form name="form" novalidate>
+						<div ng-class="{ 'has-error' : form.search.$invalid && !form.search.$pristine }">
+							<!--<p ng-show="form.search.$invalid && !form.search.$pristine" class="help-block">keyword required.</p>-->
+							<div class="search-controls" ng-init="selectedRegion=''">
+								<div class="search-container"><input class="form-control" ng-model="searchKeyword" name="search" id="search" placeholder="Enter keyword..." required="required" /></div>
+								<div class="dropdowns">
+									<select class="form-control" required="required" ng-model="regions.selectedOption" ng-options="region as region.label for region in regions.availableOptions track by region.label" ng-change="onRegionChange(regions.selectedOption.label)"></select>
+								</div>
+								{{region = regions.selectedOption.value;''}}
+								<button class="btn search" ng-click="search(searchKeyword.toLowerCase(), regions.selectedOption.value)" ng-disabled="form.$invalid"></button>
+							</div>
+						</div>
+						<input ng-model="domain" type="hidden">
+					</form>
+					<div class="domainHeading">
+						<h2>{{domain}}</h2>
+					</div>
+				</div>
+			</div>	
+			<div class="bodySection">
+				<table class="rankTable table">
+					<thead>
+						<tr>
+							<th>Keywords <span>{{allKeywords.length}}</span></th>
+							<th>Current Rank</th>
+							<th>Previous Rank</th>
+							<th>Change</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="keywords in regionResponse" ng-init="last=keywords.ranking[keywords.ranking.length-2].rank;current=keywords.ranking[keywords.ranking.length-1].rank;" 
+						ng-class="{ 'highlight' :  keywords.keyword == searchKeyword.toLowerCase()}">
+						 	<td class="first">
+						 		<a ng-click="search(keywords.keyword.toLowerCase(), regions.selectedOption.value)">{{keywords.keyword}}</a>
+						 	</td>
+						 	<td>
+						 		{{current}}
+						 	</td>
+						 	<td>
+						 		{{last}}
+						 	</td>
+							<td ng-init="diff=last - current">
+							 	<span class="difference" ng-if="last">{{diff}}</span>
+							 	<span class="arrow" ng-if="last" ng-class="{'arrow-up' : last > current, 'arrow-down' : last < current, 'arrow-side' : last == current}"></span>
+						 	</td>
+						 	<td>
+						 		<div class="update" ng-click="search(keywords.keyword.toLowerCase(), regions.selectedOption.value)"></div>
+						 	</td>
+						 	<td>
+						 		<div class="remove" ng-click="remove(keywords.keyword)"></div>
+						 	</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="rankings-graph-container" ng-show="history.ranking != ''" ng-if="history.ranking">
+					<div class="title">
+						<p>Keyword ranking report for: "{{searchKeyword.toUpperCase()}}" on "{{domain}}" in {{(regions.selectedOption.label)}}</p>
+					</div>
+					<div fusioncharts width="100%" height="450" type="line" datasource="{{myDataSource}}" style="margin-top: 20px;"></div>
+					<div class="results-title">Top 50 Google Results:</div>
+					<div class="results-container">
+						<div ng-class="{'match': result.match}" class="result" ng-repeat="result in searchresults">
+							<div class="rank">{{result.ranking}}. </div>
+							<div class="result-details">
+								<h3 class="title" ng-bind-html="result.title" ng-class="{'match': result.match}"></h3>
+								<a class="url" href="{{result.url}}" target="_blank">{{result.url}}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer col-md-12 col-xs-12">
+            <p>Powered by <a href="http://www.littleforest.co.uk/">Little Forest</a> a tool that encourages continuous improvement towards web success. </p>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+        <script src="lib/angular/angular.min.js" type="text/javascript"></script>
+		<script src="lib/angular-fusioncharts/fusioncharts.js" type="text/javascript"></script>
+		<script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+		<!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>-->
+		<script src="controllers/controller.js" type="text/javascript"></script>
+		<script type="text/javascript" src="lib/angular-fusioncharts/angular-fusioncharts.min.js"></script>
+		<script type="text/javascript" src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="lib/angular-route/angular-route.min.js" type="text/javascript"></script>
+	</body>
+</html>
