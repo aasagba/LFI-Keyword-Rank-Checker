@@ -20,8 +20,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
 	service: "Gmail",
 	auth: {
-		user: "lfi@littleforest.co.uk",
-		pass: "L1ttleF0rest"
+		user: "",
+		pass: ""
 	}
 })
 var environment = app.get('env');
@@ -31,7 +31,6 @@ if (environment === "dev" || environment === "production"){
 } else {
 	databaseUrl = 'mongodb://' + dbUser + ':' + dbPass + '@' + dbHostname + ':' + dbPort + '/' + dbName; // "username:password@example.com/mydb"
 }
-//var databaseUrl = "mongodb://test:test@ds033754.mongolab.com:33754/keywordranking";
 
 var db = mongojs(databaseUrl, collections, {authMechanism: 'ScramSHA1'});
 var bodyParser = require('body-parser');
@@ -125,12 +124,11 @@ app.put('/scrape/:region', function (req, res) {
 	
 	var keyword = req.body.keyword, newrankdata = req.body.ranking, newdate = req.body.ranking[0].date;
 	var newrank = req.body.ranking[0].rank;
-	//var url = "www." + req.body.url + region;
 	var url = "www." + req.body.url;
 	console.log("new rank date: "+newdate + ", new rank: "+newrank+ ", url: "+url);
 	
 	var query = {};
-	//db.keywordranking.findOne({_id: mongojs.ObjectId(id)}, function (err, docs) {
+
 	db.keywordranking.findOne({url: url}, function(err, docs) {
 		
 		if(err){
