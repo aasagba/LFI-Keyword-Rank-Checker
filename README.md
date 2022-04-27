@@ -31,4 +31,4 @@ From your MongoDB directory, and then run the code with
 ### Who do I talk to? ###
 
 * Adrian Asagba
-* Adrian@littleforest.co.uk
+* aasagba@gmail.com
